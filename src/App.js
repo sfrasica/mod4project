@@ -15,9 +15,33 @@ import {withRouter} from 'react-router-dom'
     user: {
       id: 0,
       username: ""
-    }
+    },
+    token: ""
   }
   
+
+  componentDidMount() {
+    if (localStorage.token) {
+      fetch("http://localhost:3000/persist",{
+        headers: {
+          "Authorization": `bearer ${localStorage.token}`
+        }
+      } )
+    }
+  }
+  handleResp = (resp) => {
+    if (resp.user) {
+      localStorage.token = resp.token
+      this.setState({
+          user: resp.user,
+          token: resp.token
+        }, () => {
+          this.props.history.push("/profile")
+        })
+      } else {
+        alert(resp.error)
+      }
+  }
 
   handleLoginSubmit = (userInfo) => {
     console.log("Login has been submitted")
@@ -30,14 +54,7 @@ import {withRouter} from 'react-router-dom'
       body: JSON.stringify(userInfo)
     })
     .then(resp => resp.json())
-    .then((resp) =>{
-        
-      this.setState({
-          user: resp
-        }, () => {
-          this.props.history.push("/profile")
-        })
-      })
+    .then(this.handleResp)
   }
 
   handleRegisterSubmit = (userInfo) => {
@@ -54,11 +71,7 @@ import {withRouter} from 'react-router-dom'
       })
     })
     .then(resp => resp.json())
-    .then(registeredUser => {
-      this.setState({
-        user: registeredUser
-      })
-    })
+    .then(this.handleResp)
   }
 
   renderForm = (routerProps) => {
@@ -70,7 +83,7 @@ import {withRouter} from 'react-router-dom'
   }
 
   renderProfile = (routerProps) => {
-    return <ProfileContainer user={this.state.user}/>
+    return <ProfileContainer user={this.state.user} token={this.state.token}/>
   }
 
 
@@ -83,8 +96,8 @@ import {withRouter} from 'react-router-dom'
 
 
   render(){
-    console.log(this.state.user, "User Object")
-    console.log(this.props, "App props")
+    console.log(this.state, "APP")
+    
     return (
       <div className="App">
         <NavBar/>
