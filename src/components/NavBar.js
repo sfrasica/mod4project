@@ -16,6 +16,9 @@ const NavBar = () => {
       <li>
         <NavLink to="/profile">Profile</NavLink>
       </li>
+      <li>
+        <NavLink to="/digimons">Digimons</NavLink>
+      </li>
     </ul>
   )
 };
