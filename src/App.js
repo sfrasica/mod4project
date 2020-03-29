@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 import Form from './components/Form'
 import NavBar from './components/NavBar'
 import DigimonContainer from './components/DigimonContainer'
-import ProfileContainer from './ProfileComponents/ProfileContainer'
+
 import './App.css';
 
 import {withRouter} from 'react-router-dom'
@@ -14,7 +14,7 @@ import {withRouter} from 'react-router-dom'
   state= {
     user: {
       username: "",
-      userDigimons: []
+      user_digimons: []
     },
     token: "",
     digimons: []
@@ -45,7 +45,7 @@ import {withRouter} from 'react-router-dom'
     if (resp.user) {
       localStorage.token = resp.token
       this.setState(resp , () => {
-          this.props.history.push("/digimons")
+          this.props.history.push("/")
         })
       } 
       else {
@@ -54,7 +54,7 @@ import {withRouter} from 'react-router-dom'
   }
 
   handleLoginSubmit = (userInfo) => {
-    console.log("Login has been submitted")
+    // console.log("Login has been submitted")
 
     fetch("http://localhost:3000/login", {
       method: "POST",
@@ -100,24 +100,48 @@ import {withRouter} from 'react-router-dom'
       method: "POST",
       headers: {
           "content-type": "application/json",
-          "Authorization": `bearer ${this.state.token}`
+          "Authorization": `Bearer ${this.state.token}`
       },
       body: JSON.stringify({
-          digimon: DigimonObj
+            digimon_id: DigimonObj.id
       })
   })
   .then(resp => resp.json())
   .then(digiObj => {
     console.log(digiObj)
-    // let updatedArray = [digiObj, ...this.state.user.userDigimons]
-    //         this.setState({...this.state,
-    //                user: {
-    //                  ...this.user.state, 
-    //                  userDigimons: updatedArray
-    //                }  
-    //               }
-    //         )
+    let updatedArray = [digiObj, ...this.state.user.user_digimons]
+            this.setState({
+                   user: { ...this.state.user,
+                    user_digimons: updatedArray}  
+                  }
+            )
   })
+
+  }
+
+  deleteDigimonFromTeam = (id) => {
+     
+        fetch(`http://localhost:3000/user_digimons/${id}`, {
+            method: "DELETE",
+            headers: {
+            "content-type": "application/json",
+            "Authorization": `Bearer ${this.state.token}`
+            }
+             })  
+            .then(resp => resp.json())
+            .then(() => {
+                let updatedArray = this.state.user.user_digimons.filter(digimon => {
+                    return digimon.id !== id
+                })
+                this.setState({
+                  user: { ...this.state.user,
+                   user_digimons: updatedArray}  
+                 })
+            })
+          }
+
+  renderHome = () => {
+    return <h1>this is the Home</h1>
   }
 
 
@@ -130,26 +154,28 @@ import {withRouter} from 'react-router-dom'
 
 
   render(){
-    console.log(this.state.user, "APP")
+    // console.log(this.state.user, "APP")
+    // console.log(this.state.user.user_digimons)
+    // console.log(this.state.token)
     console.log(this.state.user.user_digimons)
-    console.log(this.state.token)
     return (
       <div className="App">
         <NavBar/>
         <Switch>
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm } />
-          <Route path="/profile" render={ this.renderProfile } />
-          <Route path="/digimons">
+          <Route exact path="/digimons">
             <DigimonContainer
               addDigimonToTeam = {this.addDigimonToTeam}
               digimons = {this.state.digimons}
-              // userDigimons = {this.state.user.user_digimons}
-              user = {this.state.user}
               userDigimons = {this.state.user.user_digimons}
+              user = {this.state.user}
               token = {this.state.token}
+              deleteDigimonFromTeam = {this.deleteDigimonFromTeam}
             />
           </Route>
+          <Route path="/profile" render={ this.renderProfile } />
+          <Route path="/" exact render={ this.renderHome} />
           <Route render={ () => <p>Page not Found</p> } />
         </Switch>
       </div>

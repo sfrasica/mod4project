@@ -10,7 +10,13 @@ class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.handleSubmit(this.state)
+
+    this.setState({
+      username: "",
+      password: ""
+    })
   }
+
 
   handleChange = (e) => {
     let {name, value} = e.target

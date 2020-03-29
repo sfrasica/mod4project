@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class DigimonCard extends Component {
+export default class TeamDigimonCard extends Component {
 
 
     state = {
@@ -14,7 +14,7 @@ export default class DigimonCard extends Component {
     }
 
     handleDelete = (e) => {
-        this.props.deleteOneDigimon(this.props.digimon.id)
+        this.props.deleteDigimonFromTeam(this.props.id)
     }
 
     handleAddDigimonToTeam = (e) => {
@@ -49,8 +49,7 @@ export default class DigimonCard extends Component {
                      }
                 
                 </div>
-                    <div><button className="ui black basic button" onClick={this.handleAddDigimonToTeam}>Add {name} to your Team</button></div>
-                <div><button className="ui black basic button" onClick={this.handleDelete}>Delete Digimon</button></div>
+                <div><button className="ui black basic button" onClick={this.handleDelete}>Remove Digimon From Team</button></div>
                 </div>
             </div>
         )

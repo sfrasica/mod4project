@@ -1,35 +1,58 @@
 import React, { Component } from 'react'
-import DigimonCard from './DigimonCard'
+import TeamDigimonCard from './TeamDigimonCard'
 export default class TeamContainer extends Component {
     
+// teamArray = () => {
+//     let listOfDigimon = this.props.digimons.map(digimonObj => {
+//             // console.log(digimonObj.name)
+        
+//         return <DigimonCard
+//                     key ={digimonObj.id}
+//                     digimon={digimonObj}
+//                     deleteOneDigimon={this.props.deleteOneDigimon}
+                   
+//                     user={this.props.user}
+//                     token={this.props.token}
+                    
+//                 />
+                
+//     })
+//         return listOfDigimon
+//     }
+
 teamArray = () => {
-    let firstArray = this.props.user.user_digimons
-    let listOfDigimon = firstArray.map((userDigimonObj) => {
-        return <li><DigimonCard
-                    key ={userDigimonObj.id}
-                    digimon={userDigimonObj.digimon}
-                    deleteOneDigimon={this.props.deleteOneDigimon}
-                    addDigimonToTeam={this.props.addDigimonToTeam}
-                    user={this.props.user}
-                    token={this.props.token}
+        let listOfDigimon = this.props.digimons.map(digimonObj => {
+                //  return digimonObj.digimon.name
+            let {id, digimon} = digimonObj
+            return <TeamDigimonCard
+                        key ={id}
+                        id = {id}
+                        digimon={digimon}
+                        deleteDigimonFromTeam={this.props.deleteDigimonFromTeam}
+                        // user={user}
+                        token={this.props.token}
+                        
                     />
-                </li>
-    })
-        return listOfDigimon
-    }
+                    
+        })
+            return listOfDigimon
+        }
+    
+
+
     render() {
         
-       
-        // console.log(this.props.user)
+    //    console.log(this.props.user.user_digimons)
+        console.log(this.props.digimons)
         // console.log(this.props.token)
         // console.log(this.props.user.user_digimons)
-        console.log(this.teamArray())
+        
         return (
-            <div>
+            <div className="ui grid container">
                 Team
-               <ul>
+               
                  {this.teamArray()}  
-               </ul>
+              
             </div>
         )
     }

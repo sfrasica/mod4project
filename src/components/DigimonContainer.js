@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DigimonList from './DigimonList.jsx'
 import Search from './Search.jsx'
-import AddDigimonForm from './AddDigimonForm.jsx'
+
 import TeamContainer from './TeamContainer'
   
   
@@ -27,26 +27,32 @@ export default class DigimonContainer extends Component {
         return filteredDigimon
     }
 
-    // deleteOneDigimon = (id) => {
-        
-    //     fetch(`http://localhost:3000/digimons/${id}`, {
-    //         method: "DELETE",
-    //         headers: {
-    //         "content-type": "application/json",
-    //         "Authorization": `bearer ${this.props.token}`
-    //         }
-    //          })  
-    //         .then(resp => resp.json())
-    //         .then(() => {
-    //             let updatedArray = this.props.digimons.filter(digimon => {
-    //                 return digimon.id !== id
-    //             })
-    //             this.setState({
-    //                 digimons: updatedArray
-    //             })
-    //         })
+    
         
     // }
+    // addDigimonToTeam = (DigimonObj) => {
+    //     console.log(DigimonObj)
+    
+    //     fetch("http://localhost:3000/user_digimons", {
+    //       method: "POST",
+    //       headers: {
+    //           "content-type": "application/json",
+    //           "Authorization": `Bearer ${this.props.token}`
+    //       },
+    //       body: JSON.stringify({
+    //             digimon_id: DigimonObj.id
+    //       })
+    //   })
+    //   .then(resp => resp.json())
+    //   .then(digiObj => {
+    //     console.log(digiObj)
+    //     let updatedArray = [this.props.user.digimons]
+    //             this.setState({...this.state,
+    //                     digimons: updatedArray  
+                      
+    //             })
+    //   })
+    //   }
 
 
     
@@ -60,21 +66,19 @@ export default class DigimonContainer extends Component {
     //in render json in create controller action in userdigimon? put user_digimon.digimon
 
     render() {
-        console.log(this.state.digimons)
-        console.log(this.props.userDigimons)
-
+        console.log(this.props.user.user_digimons)
         return (
             
             <div>
                 <div>
                     <h2>Welcome to DigiLand, {this.props.user.username}</h2>
                 </div>
-                <AddDigimonForm addDigimon={this.addDigimon} />
+         
                 <br/>
                 <Search searchTerm={this.state.searchTerm} changeSearchTerm={this.changeSearchTerm}/> 
                 <br/>
                 <DigimonList digimons={this.returnFilteredDigimon()} deleteOneDigimon={this.deleteOneDigimon} addDigimonToTeam={this.props.addDigimonToTeam} user={this.props.user} token={this.props.token}/>
-                <TeamContainer digimons={this.state.digimons} userDigimons={this.props.userDigimons} user={this.props.user} token={this.props.token} />
+                <TeamContainer digimons={this.props.user.user_digimons} user={this.props.user} token={this.props.token} deleteDigimonFromTeam={this.props.deleteDigimonFromTeam} />
             </div>
         )
     }
