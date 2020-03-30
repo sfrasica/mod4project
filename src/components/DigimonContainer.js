@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import DigimonList from './DigimonList.jsx'
 import Search from './Search.jsx'
-
+// import {Switch, Route} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import TeamContainer from './TeamContainer'
+// import { Divider } from 'semantic-ui-react'
   
   
-export default class DigimonContainer extends Component {
+class DigimonContainer extends Component {
 
     state= {
         digimons: [],
@@ -27,7 +29,7 @@ export default class DigimonContainer extends Component {
         return filteredDigimon
     }
 
-    
+   
         
     // }
     // addDigimonToTeam = (DigimonObj) => {
@@ -73,13 +75,27 @@ export default class DigimonContainer extends Component {
                 <div>
                     <h2>Welcome to DigiLand, {this.props.user.username}</h2>
                 </div>
-         
                 <br/>
+                
                 <Search searchTerm={this.state.searchTerm} changeSearchTerm={this.changeSearchTerm}/> 
                 <br/>
+                {/* <Switch> */}
                 <DigimonList digimons={this.returnFilteredDigimon()} deleteOneDigimon={this.deleteOneDigimon} addDigimonToTeam={this.props.addDigimonToTeam} user={this.props.user} token={this.props.token}/>
-                <TeamContainer digimons={this.props.user.user_digimons} user={this.props.user} token={this.props.token} deleteDigimonFromTeam={this.props.deleteDigimonFromTeam} />
+                {/* <Route path="/team"> */}
+                <br/>
+                <div className="ui divider"></div>
+                <div>
+                    <TeamContainer digimons={this.props.user.user_digimons} 
+                                    user={this.props.user} token={this.props.token} 
+                                    deleteDigimonFromTeam={this.props.deleteDigimonFromTeam} 
+                                    updateDigimon = {this.props.updateDigimon}
+                    />
+                </div>
+                {/* </Route> */}
+                {/* </Switch> */}
             </div>
         )
     }
 }
+
+export default withRouter(DigimonContainer)

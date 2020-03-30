@@ -1,24 +1,8 @@
 import React, { Component } from 'react'
 import TeamDigimonCard from './TeamDigimonCard'
+
 export default class TeamContainer extends Component {
     
-// teamArray = () => {
-//     let listOfDigimon = this.props.digimons.map(digimonObj => {
-//             // console.log(digimonObj.name)
-        
-//         return <DigimonCard
-//                     key ={digimonObj.id}
-//                     digimon={digimonObj}
-//                     deleteOneDigimon={this.props.deleteOneDigimon}
-                   
-//                     user={this.props.user}
-//                     token={this.props.token}
-                    
-//                 />
-                
-//     })
-//         return listOfDigimon
-//     }
 
 teamArray = () => {
         let listOfDigimon = this.props.digimons.map(digimonObj => {
@@ -29,30 +13,19 @@ teamArray = () => {
                         id = {id}
                         digimon={digimon}
                         deleteDigimonFromTeam={this.props.deleteDigimonFromTeam}
-                        // user={user}
-                        token={this.props.token}
-                        
+                        updateDigimon = {this.props.updateDigimon}
+                        token={this.props.token}  
                     />
-                    
-        })
+                    })
             return listOfDigimon
         }
     
-
-
-    render() {
-        
-    //    console.log(this.props.user.user_digimons)
+render() {
         console.log(this.props.digimons)
-        // console.log(this.props.token)
-        // console.log(this.props.user.user_digimons)
-        
-        return (
+     return (
             <div className="ui grid container">
-                Team
-               
+                <h3>{this.props.user.username}'s Team</h3>
                  {this.teamArray()}  
-              
             </div>
         )
     }

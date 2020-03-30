@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 import Form from './components/Form'
 import NavBar from './components/NavBar'
 import DigimonContainer from './components/DigimonContainer'
-
+import 'semantic-ui-css/semantic.min.css'
 import './App.css';
 
 import {withRouter} from 'react-router-dom'
@@ -140,11 +140,41 @@ import {withRouter} from 'react-router-dom'
             })
           }
 
-  renderHome = () => {
-    return <h1>this is the Home</h1>
-  }
 
-
+    updateDigimon = (id, statsIncrease) => {
+      let foundObject = this.state.user.user_digimons.find(userDigimonObj => userDigimonObj.id === id)
+      console.log(foundObject.digimon.stats)
+      fetch(`http://localhost:4000/user_digimons/${id}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          "Authorization": `Bearer ${this.state.token}`
+        },
+        body: JSON.stringify({
+          digimon: {...foundObject.digimon, stats: foundObject.digimon.stats + statsIncrease}
+          
+        })
+      })
+      .then(r => r.json())
+      .then(() => {
+        let updatedArray = this.state.user.user_digimons.map((userDigimonObj) => {
+          if (userDigimonObj.id === id) {
+            return {
+              ...userDigimonObj,
+              stats: userDigimonObj.digimon.stats + statsIncrease
+            }
+          } else {
+            return userDigimonObj
+          }
+        })
+  
+        this.setState({
+          user: { ...this.state.user,
+           user_digimons: updatedArray}  
+         })
+      })
+    }
+  
 
 
 
@@ -155,27 +185,25 @@ import {withRouter} from 'react-router-dom'
 
   render(){
     // console.log(this.state.user, "APP")
-    // console.log(this.state.user.user_digimons)
-    // console.log(this.state.token)
     console.log(this.state.user.user_digimons)
+    // console.log(this.state.token)
     return (
       <div className="App">
         <NavBar/>
         <Switch>
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm } />
-          <Route exact path="/digimons">
-            <DigimonContainer
+          <Route path="/digimons">
+            <DigimonContainer className="App-body"
               addDigimonToTeam = {this.addDigimonToTeam}
               digimons = {this.state.digimons}
               userDigimons = {this.state.user.user_digimons}
               user = {this.state.user}
               token = {this.state.token}
               deleteDigimonFromTeam = {this.deleteDigimonFromTeam}
+              updateDigimon = {this.updateDigimon}
             />
           </Route>
-          <Route path="/profile" render={ this.renderProfile } />
-          <Route path="/" exact render={ this.renderHome} />
           <Route render={ () => <p>Page not Found</p> } />
         </Switch>
       </div>

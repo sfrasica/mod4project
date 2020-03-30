@@ -28,8 +28,14 @@ export default class TeamDigimonCard extends Component {
 
     }
 
+    handleUpdateDigimon = (e) => {
+        let statChange = Math.random() < .5 ? 10 : -15
+        console.log(statChange)
+        this.props.updateDigimon(this.props.id, statChange)
+    }
+
     render() {
-        let {name, img, level} = this.props.digimon
+        let {name, img, level, stats} = this.props.digimon
         return (
             <div>
                 
@@ -40,7 +46,7 @@ export default class TeamDigimonCard extends Component {
                 <div className="meta" ><span>Level: {level}</span></div>
                 <div className="meta" ><button  className="ui black basic button" onClick={this.handleClick}>Show DigiDetails</button>
                     {this.state.clicked ?
-                    <div className="meta"><span>{name}'s  details will go here</span></div>
+                    <div className="meta"><span>{name}'s  stats: {stats} will go here</span></div>
                     
                     :
 
@@ -50,6 +56,7 @@ export default class TeamDigimonCard extends Component {
                 
                 </div>
                 <div><button className="ui black basic button" onClick={this.handleDelete}>Remove Digimon From Team</button></div>
+                <div><button className="ui black basic button" onClick={this.handleUpdateDigimon}>Update digimon stats</button></div>
                 </div>
             </div>
         )

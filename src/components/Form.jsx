@@ -30,7 +30,7 @@ class Form extends Component {
     let {username, password} = this.state
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} >
         <h1>{formName}</h1>
         <label htmlFor="username">Username:</label>
         <input type="text" autoComplete="off" name="username" value={username} onChange={this.handleChange}/>

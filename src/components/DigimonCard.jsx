@@ -33,12 +33,12 @@ export default class DigimonCard extends Component {
         return (
             <div>
                 
-                <div className="four wide column rendered-example views-card-types-card-example-card"></div>
-                <div className="ui card" style ={{opacity: 0.8}}>
-                <div className="image"><img src={img} alt={name}/></div>
-                <div className="meta"  ><span style ={{opacity: 1.0}}>{name}</span></div>
-                <div className="meta" ><span>Level: {level}</span></div>
-                <div className="meta" ><button  className="ui black basic button" onClick={this.handleClick}>Show DigiDetails</button>
+                <div className="four wide column rendered-example views-card-types-card-example-card" style={{opacity: 0.8}}>
+               
+                <div className="image"><img src={img} alt={name} /></div>
+                <div className="ui label"  >{name}</div>
+                <div className="meta" ><span className="ui label">Level: {level}</span></div>
+                <div className="meta" ><button  className="ui red inverted button" onClick={this.handleClick}>Show DigiDetails</button>
                     {this.state.clicked ?
                     <div className="meta"><span>{name}'s  details will go here</span></div>
                     
@@ -49,8 +49,9 @@ export default class DigimonCard extends Component {
                      }
                 
                 </div>
-                    <div><button className="ui black basic button" onClick={this.handleAddDigimonToTeam}>Add {name} to your Team</button></div>
-                <div><button className="ui black basic button" onClick={this.handleDelete}>Delete Digimon</button></div>
+                    
+                <button className="ui red inverted button" onClick={this.handleAddDigimonToTeam}>Add {name} to your Team</button>
+                  
                 </div>
             </div>
         )

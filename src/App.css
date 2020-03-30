@@ -1,4 +1,8 @@
 .App {
+  background-image: url("https://wallpapercave.com/wp/wp2116378.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   text-align: center;
 }
 
@@ -25,7 +29,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: rgb(5, 5, 5)
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +39,11 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.App-body {
+  background-image: url("https://wallpapercave.com/wp/wp2116378.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
