@@ -111,7 +111,7 @@ import {withRouter} from 'react-router-dom'
     console.log(digiObj)
     let updatedArray = [digiObj, ...this.state.user.user_digimons]
             this.setState({
-                   user: { ...this.state.user,
+                    user: { ...this.state.user,
                     user_digimons: updatedArray}  
                   }
             )
